@@ -9,7 +9,7 @@
 # Create a test user
 User.create!(
   name: 'Admin',
-  email: 'exapmle@exapmle.com',
+  email: 'example@example.com',
   password: '123456',
   role: 'admin'
 )
