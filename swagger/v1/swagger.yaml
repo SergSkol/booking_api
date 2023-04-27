@@ -1,0 +1,209 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/items":
+    post:
+      summary: Create new item
+      tags:
+      - items
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: Item created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                location:
+                  type: string
+                photo:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - description
+              - location
+              - photo
+              - price
+    get:
+      summary: Index of items
+      tags:
+      - items
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Items list received
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    location:
+                      type: string
+                    photo:
+                      type: string
+                    price:
+                      type: number
+                  required:
+                  - name
+                  - description
+                  - location
+                  - photo
+                  - price
+  "/api/items/{item_id}":
+    delete:
+      summary: Delete item
+      tags:
+      - items
+      security:
+      - Bearer: []
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Item deleted
+  "/api/reservations":
+    get:
+      summary: List all reservations for the current user
+      tags:
+      - reservations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Add a new reservation
+      tags:
+      - reservations
+      parameters: []
+      responses:
+        '201':
+          description: Reservation was created
+        '401':
+          description: Only an admin or owner can show a reservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                start_date:
+                  type: string
+                end_date:
+                  type: string
+              required:
+              - item_id
+              - start_date
+              - end_date
+  "/api/reservations/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    delete:
+      summary: Delete specific reservation by {id}
+      tags:
+      - reservations
+      responses:
+        '200':
+          description: Reservation was destroyed
+        '401':
+          description: Only an admin or owner can destroy a reservation
+  "/oauth/token":
+    post:
+      summary: Receive token for existing user
+      tags:
+      - users
+      parameters: []
+      responses:
+        '200':
+          description: Returned access token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+              required:
+              - grant_type
+              - email
+              - password
+              - client_id
+              - client_secret
+  "/api/users":
+    post:
+      summary: Create new user with token
+      tags:
+      - users
+      parameters: []
+      responses:
+        '200':
+          description: Sign up successfull with returned access token
+        '403':
+          description: Invalid client ID
+        '422':
+          description: Invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                client_id:
+                  type: string
+                role:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - client_id
+              - role
+              - password
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
