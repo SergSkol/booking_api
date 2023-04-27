@@ -6,14 +6,13 @@ module Api
     end
 
     def show
-      reservation = Reservation.find(params[:id])
-
       if current_user.role != 'admin' && current_user.id != reservation.user_id
         render(json: { error: 'Only an admin or owner can show a reservation' }, status: 401)
         return
       end
 
-      render json: { reservation: }
+      @reservations = current_user.reservations.where(id: params[:id]).includes(:item, :user)
+      render json: { reservation: @reservations.as_json(include: { item: {}, user: {} }) }
     end
 
     def create

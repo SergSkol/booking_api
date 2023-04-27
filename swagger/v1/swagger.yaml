@@ -5,38 +5,6 @@ info:
   version: v1
 paths:
   "/api/items":
-    post:
-      summary: Create new item
-      tags:
-      - items
-      security:
-      - Bearer: []
-      parameters: []
-      responses:
-        '200':
-          description: Item created
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                location:
-                  type: string
-                photo:
-                  type: string
-                price:
-                  type: number
-              required:
-              - name
-              - description
-              - location
-              - photo
-              - price
     get:
       summary: Index of items
       tags:
@@ -69,7 +37,71 @@ paths:
                   - location
                   - photo
                   - price
+    post:
+      summary: Create new item
+      tags:
+      - items
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: Item created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                location:
+                  type: string
+                photo:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - description
+              - location
+              - photo
+              - price
   "/api/items/{item_id}":
+    get:
+      summary: Show one item
+      tags:
+      - items
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Item received
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    location:
+                      type: string
+                    photo:
+                      type: string
+                    price:
+                      type: number
+                  required:
+                  - name
+                  - description
+                  - location
+                  - photo
+                  - price
     delete:
       summary: Delete item
       tags:
@@ -85,6 +117,38 @@ paths:
       responses:
         '200':
           description: Item deleted
+    put:
+      summary: Update item
+      tags:
+      - items
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: Item updates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                location:
+                  type: string
+                photo:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - description
+              - location
+              - photo
+              - price  
   "/api/reservations":
     get:
       summary: List all reservations for the current user
@@ -102,7 +166,7 @@ paths:
         '201':
           description: Reservation was created
         '401':
-          description: Only an admin or owner can show a reservation
+          description: Only an admin or owner can add a reservation
       requestBody:
         content:
           application/json:
@@ -127,8 +191,15 @@ paths:
       required: true
       schema:
         type: string
+    get:
+      summary: Show one reservation
+      tags:
+      - reservations
+      responses:
+        '200':
+          description: successful
     delete:
-      summary: Delete specific reservation by {id}
+      summary: Delete one reservation
       tags:
       - reservations
       responses:
@@ -136,6 +207,32 @@ paths:
           description: Reservation was destroyed
         '401':
           description: Only an admin or owner can destroy a reservation
+    put:
+      summary: Update reservation
+      tags:
+      - reservations
+      parameters: []
+      responses:
+        '201':
+          description: Reservation was updated
+        '401':
+          description: Only an admin or owner can update a reservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                start_date:
+                  type: string
+                end_date:
+                  type: string
+              required:
+              - item_id
+              - start_date
+              - end_date
   "/oauth/token":
     post:
       summary: Receive token for existing user
