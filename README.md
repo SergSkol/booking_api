@@ -138,15 +138,12 @@ Example command:
 
 ## 👥 Authors <a name="authors"></a>
 
-
-👤 **Eva-Lavinia Bucur**
-
 👤 **Sergiy Shkolnik**
-
 - GitHub: [SergSkol](https://github.com/SergSkol)
 - Twitter: [@sps676](https://twitter.com/sps676)
 - LinkedIn: [SergSkol](https://www.linkedin.com/in/sergskol/)
 
+👤 **Eva-Lavinia Bucur**
 - GitHub: [@BucurEva87](https://github.com/BucurEva87)
 - Twitter: [@BucurEva](https://twitter.com/BucurEva)
 - LinkedIn: [Eva-Lavinia Bucur](https://www.linkedin.com/in/eva-lavinia-bucur)
